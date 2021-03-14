@@ -1,45 +1,42 @@
 """Test for math_operations function
 """
 
+# from mathgrid import solver
 import pytest
 from mathgrid import solver
 
 
 def test_addition():
-    assert solver.math_operations(1, solver.Operator.ADDITION, 1) == 2
+    assert solver.basic_operation(1, 1, solver.Operator.ADDITION) == 2
 
 
 def test_substraction():
-    assert solver.math_operations(5.6, solver.Operator.SUBSTRACTION, 2) == 5.6 - 2
+    assert solver.basic_operation(
+        5.6, 2, solver.Operator.SUBSTRACTION) == 5.6 - 2
 
 
 def test_product():
-    assert solver.math_operations(5, solver.Operator.PRODUCT, 3) == 15
+    assert solver.basic_operation(5, 3, solver.Operator.PRODUCT) == 15
 
 
 def test_division():
-    assert solver.math_operations(5, solver.Operator.DIVISION, 2) == 2.5
+    assert solver.basic_operation(5, 2, solver.Operator.DIVISION) == 2.5
 
 
 def test_power():
-    assert solver.math_operations(5, solver.Operator.POWER, 3) == 125
+    assert solver.basic_operation(5, 3, solver.Operator.POWER) == 125
 
 
 def test_zero_division():
     with pytest.raises(ZeroDivisionError):
-        solver.math_operations(5, solver.Operator.DIVISION, 0)
+        solver.basic_operation(5, 0, solver.Operator.DIVISION)
 
 
 def test_not_numbers1():
     with pytest.raises(TypeError):
-        solver.math_operations('5', solver.Operator.ADDITION, 0)
+        solver.basic_operation('5', 0, solver.Operator.ADDITION)
 
 
 def test_not_numbers2():
     with pytest.raises(TypeError):
-        solver.math_operations('5', solver.Operator.POWER, 'm')
-
-
-def test_operator_not_supported():
-    with pytest.raises(ValueError):
-        solver.math_operations(5, '+', 2)
+        solver.basic_operation('5', 'm', solver.Operator.POWER)
