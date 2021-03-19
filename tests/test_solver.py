@@ -2,8 +2,6 @@
 """
 
 # from mathgrid import solver
-from mathgrid.solver.basic_operations import Operator
-import pytest
 from mathgrid import solver
 
 

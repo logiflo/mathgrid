@@ -24,7 +24,8 @@ def test_item_str_to_number_not_number():
 
 
 def test_exp_str_to_list_01():
-    assert solver.exp_str_to_list('=(1.5 +7- 8)*-8') == ['=', '(', '1.5', '+', '7', '-', '8', ')', '*', '-8']
+    assert solver.exp_str_to_list('=(1.5 +7- 8)*-8') == \
+        ['=', '(', '1.5', '+', '7', '-', '8', ')', '*', '-8']
 
 
 def test_exp_str_to_list_02():
