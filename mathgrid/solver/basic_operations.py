@@ -1,3 +1,5 @@
+"""Basic operations module
+"""
 
 from ordered_enum import OrderedEnum
 

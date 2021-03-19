@@ -1,3 +1,6 @@
+"""Converters module
+"""
+
 from mathgrid.solver.checker import is_number
 
 
@@ -12,6 +15,8 @@ def item_str_to_number(item: str) -> int or float:
 
 
 def exp_str_to_list(expression: str) -> list:
+    """Convert the expression string into a list, deleting white spaces.
+    """
     exp_list = []
     auxiliar = ''
     for item in expression:
@@ -19,16 +24,16 @@ def exp_str_to_list(expression: str) -> list:
             auxiliar += item
         elif item in '.' and '.' not in auxiliar:
             auxiliar += item
-        elif item == '-' and not len(auxiliar):
+        elif item == '-' and len(auxiliar) == 0:
             auxiliar += item
         elif item == ' ':
             continue
         else:
-            if len(auxiliar):
+            if len(auxiliar) != 0:
                 exp_list.append(auxiliar)
                 auxiliar = ''
             exp_list.append(item)
-    if len(auxiliar):
+    if len(auxiliar) != 0:
         exp_list.append(auxiliar)
 
     return exp_list

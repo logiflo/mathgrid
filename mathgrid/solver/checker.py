@@ -1,3 +1,6 @@
+"""Checker module
+"""
+
 from .basic_operations import Operator
 
 
@@ -66,7 +69,8 @@ def check_expression(expression: list) -> bool:
         if not is_number(item) and not is_operator(item) and item not in '()':
             return False
         if index < len(expression[1:]) - 1:
-            if (is_number(item) and is_number(expression[index + 1])) or (is_operator(item) and is_operator(expression[index + 1])) :
+            if (is_number(item) and is_number(expression[index + 1])) or (
+                is_operator(item) and is_operator(expression[index + 1])):
                 return False
 
     return True
