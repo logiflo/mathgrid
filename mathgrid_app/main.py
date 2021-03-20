@@ -75,7 +75,7 @@ def grid_test():
     data_frame = pd.DataFrame(index=index, columns=headings)
     data_frame = data_frame.fillna('')
 
-    data = np.array([np.arange(10)]*3).T
+    # data = np.array([np.arange(10)]*3).T
 
     # css_values = """
     # .ag-theme-alpine .ag-ltr .ag-cell {
