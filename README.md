@@ -2,6 +2,8 @@
 
 [![Trello URL](https://img.shields.io/badge/trello-MathGrid-green.svg?longCache=true&style=for-the-badge)](https://trello.com/b/IKsKIcp8)
 
+[![Build Status](https://www.travis-ci.com/logiflo/mathgrid.svg?branch=master)](https://www.travis-ci.com/logiflo/mathgrid)
+
 ## Index
 
 - [MathGrid](#mathgrid)

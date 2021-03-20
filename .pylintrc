@@ -1,0 +1,3 @@
+[MASTER]
+
+disable=no-absolute-import,old-division,wildcard-import,unused-wildcard-import
