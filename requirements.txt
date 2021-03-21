@@ -1,5 +1,6 @@
-eel==0.14.0
 pylint==2.7.1
 autopep8==1.5.5
 pytest==6.2.2
 ordered_enum==0.0.6
+justpy==0.1.5
+pandas==1.2.3
