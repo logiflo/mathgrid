@@ -5,6 +5,7 @@ This document describes changes between tagged MathGrid versions.
 
 ## Enhancements
 
-- Solver module.
-- Add some tests for basic_operation function.
+- Complete all Solver modules.
+- Add some tests for Solver modules.
 - Implement CI with TravisCI.
+- MathGrid GUI application.
