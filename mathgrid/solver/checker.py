@@ -65,12 +65,26 @@ def check_expression(expression: list) -> bool:
     if not valid_num_brackets(expression):
         return False
 
+    total_numbers = 0
+    total_operators = 0
     for index, item in enumerate(expression[1:], 1):
+        if is_number(item):
+            total_numbers += 1
+        elif is_operator(item):
+            total_operators += 1
+
+        if (index == 1 or index == len(expression[1:])) and is_operator(item):
+            return False
         if not is_number(item) and not is_operator(item) and item not in '()':
             return False
-        if index < len(expression[1:]) - 1:
+        if index <= len(expression[1:]) - 1:
             if (is_number(item) and is_number(expression[index + 1])) or (
                 is_operator(item) and is_operator(expression[index + 1])):
                 return False
+            if (is_operator(item) and expression[index + 1] == ')') or (
+                item == ')' and is_number(expression[index + 1])):
+                return False
 
+    if total_numbers != total_operators + 1:
+        return False
     return True
