@@ -8,9 +8,11 @@ import string
 import numpy as np
 import justpy as jp
 import pandas as pd
+from mathgrid.solver.solver import calculator
 
-START_INDEX: int = 1
-END_INDEX: int = 20
+
+START_INDEX: int = 0
+END_INDEX: int = 19
 
 GRID_OPTIONS = """
 {
@@ -18,7 +20,7 @@ GRID_OPTIONS = """
     defaultColDef: {
         filter: true,
         sortable: false,
-        resizable: true,
+        resizable: false,
         headerClass: 'font-bold',
         editable: true
     },
@@ -36,8 +38,10 @@ def on_input_key(self, msg):
         msg (object): Event data object.
     """
     if self.last_cell is not None:
+        self.grid.data_frame_eq[self.last_cell['col']
+                                ][self.last_cell['row']] = msg.value
         self.grid.options['rowData'][self.last_cell['row']
-                                     ][self.last_cell['col']] = msg.value
+                                     ][self.last_cell['col']] = calculator(msg.value)
 
 
 def on_cell_clicked(self, msg):
@@ -50,7 +54,7 @@ def on_cell_clicked(self, msg):
         msg (object): Event data object.
     """
     self.cell_label.value = msg.colId + str(msg.rowIndex)
-    self.input_field.value = msg.data[msg.colId]
+    self.input_field.value = self.data_frame_eq[msg.colId][msg.rowIndex]
     self.input_field.last_cell = {"row": msg.rowIndex, "col": msg.colId}
     self.last_row = msg.row
 
@@ -63,7 +67,13 @@ def on_cell_value_changed(self, msg):
     Args:
         msg (object): Event data object.
     """
-    self.input_field.value = msg.data[msg.colId]
+    self.data_frame_eq[msg.colId][msg.rowIndex] = msg.data[msg.colId]
+    self.input_field.value = self.data_frame_eq[msg.colId][msg.rowIndex]
+
+
+def on_cell_editing_stopped(self, msg):
+    self.options['rowData'][self.input_field.last_cell['row']
+                            ][self.input_field.last_cell['col']] = calculator(msg.data[msg.colId])
 
 
 def grid_test():
@@ -72,8 +82,11 @@ def grid_test():
     headings = list(string.ascii_uppercase)
     index = np.arange(START_INDEX, END_INDEX)
 
-    data_frame = pd.DataFrame(index=index, columns=headings)
-    data_frame = data_frame.fillna('')
+    data_frame_values = pd.DataFrame(index=index, columns=headings)
+    data_frame_values = data_frame_values.fillna('')
+
+    data_frame_eq = pd.DataFrame(index=index, columns=headings)
+    data_frame_eq = data_frame_eq.fillna('')
 
     # data = np.array([np.arange(10)]*3).T
 
@@ -98,13 +111,16 @@ def grid_test():
     input_field.last_cell = None
 
     grid = jp.AgGrid(a=web_page, options=GRID_OPTIONS)
-    grid.load_pandas_frame(data_frame)
+    grid.load_pandas_frame(data_frame_values)
     grid.options.pagination = True
     grid.options.paginationAutoPageSize = True
     grid.cell_label = cell_label
     grid.input_field = input_field
+    grid.data_frame_eq = data_frame_eq
+
     grid.on('cellClicked', on_cell_clicked)
     grid.on('cellValueChanged', on_cell_value_changed)
+    grid.on('cellEditingStopped', on_cell_editing_stopped)
 
     input_field.grid = grid
 
